@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "api/*.ts": {
+      "runtime": "@vercel/node@3.0.26",
+      "memory": 128,
+      "maxDuration": 10
+    }
+  }
+}
