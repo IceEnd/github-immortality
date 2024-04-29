@@ -1,27 +1,79 @@
+import { AxiosResponse } from 'axios';
 import { request } from './request';
-import { MissingParamError } from '../common/error';
-import { retryer } from '../common/retries';
+import {
+  retryer, wrapTextMultiline, MissingParamError, CustomError, ErrorCodes, calculateRank
+} from '../common';
 import { GRAPHQL_REPOS_QUERY, GRAPHQL_STATS_QUERY } from '../graphql';
+import { StatsResponse, IGithubStats, GithubErrorType } from '../../src/types/github';
+import { IStats } from '../../src/types/stats';
 
 type Variables = {
   login: string;
   first: number;
-  after: boolean;
   includeMergedPullRequests: boolean;
   includeDiscussions: boolean;
   includeDiscussionsAnswers: boolean;
-};
+  after: string | null;
+}
 
 /**
  * Fetch stats for a given username.
  *
  * @param {string} username GitHub username.
  */
-export const fetchStats = async (username?: string): Promise<any> => {
+export const fetchStats = async (username?: string): Promise<IStats> => {
   if (!username) {
     throw new MissingParamError(['username']);
   }
 
+  const stats: IStats = {
+    name: '',
+    totalPRs: 0,
+    totalPRsMerged: 0,
+    mergedPRsPercentage: 0,
+    totalReviews: 0,
+    totalCommits: 0,
+    totalIssues: 0,
+    totalStars: 0,
+    totalDiscussionsStarted: 0,
+    totalDiscussionsAnswered: 0,
+    contributedTo: 0,
+    rank: 0,
+  };
+
+  const res = await statsFetcher({
+    username,
+    includeMergedPullRequests: true,
+    includeDiscussions: true,
+    includeDiscussionsAnswers: true,
+  });
+
+  catchError(res);
+
+  const { user } = res.data.data;
+  stats.name = user.name || user.login;
+
+  Object.assign(stats, {
+    totalCommits: user.contributionsCollection.totalCommitContributions,
+    totalPRs: user.pullRequests.totalCount,
+    totalReviews: user.contributionsCollection.totalPullRequestReviewContributions,
+    contributedTo: user.repositoriesContributedTo.totalCount,
+    totalStars: user.repositories.nodes
+      .reduce((prev, curr) => {
+        return prev + curr.stargazers.totalCount;
+      }, 0),
+    rank: calculateRank({
+      allCommits: false,
+      commits: stats.totalCommits,
+      prs: stats.totalPRs,
+      reviews: stats.totalReviews,
+      issues: stats.totalIssues,
+      stars: stats.totalStars,
+      followers: user.followers.totalCount,
+    }),
+  });
+
+  return stats;
 };
 
 /**
@@ -52,7 +104,7 @@ const statsFetcher = async (params: {
       includeDiscussions,
       includeDiscussionsAnswers,
     };
-    const res = await retryer(fetcher, variables);
+    const res = await retryer<Variables, IGithubStats>(fetcher, variables);
     if (res.data.errors) {
       return res;
     }
@@ -70,16 +122,16 @@ const statsFetcher = async (params: {
       (node) => node.stargazers.totalCount !== 0,
     );
     hasNextPage =
-      process.env.FETCH_MULTI_PAGE_STARS === "true" &&
+      process.env.FETCH_MULTI_PAGE_STARS === 'true' &&
       repoNodes.length === repoNodesWithStars.length &&
       res.data.data.user.repositories.pageInfo.hasNextPage;
     endCursor = res.data.data.user.repositories.pageInfo.endCursor;
   }
 
-  return stats;
+  return stats as AxiosResponse<StatsResponse>;
 };
 
-const fetcher = (variables: Variables, token: string) => {
+const fetcher = (variables: Variables, token: string): Promise<AxiosResponse<StatsResponse>> => {
   const query = variables.after ? GRAPHQL_REPOS_QUERY : GRAPHQL_STATS_QUERY;
   return request(
     {
@@ -89,5 +141,28 @@ const fetcher = (variables: Variables, token: string) => {
     {
       Authorization: `bearer ${token}`,
     },
+  );
+};
+
+const catchError = (resp?: AxiosResponse<StatsResponse>): void => {
+  if (!resp?.data.errors) {
+    return;
+  }
+  console.error(resp.data.errors);
+  if (resp.data.errors[0].type === GithubErrorType.NOT_FOUND) {
+    throw new CustomError(
+      resp.data.errors[0].message || 'Could not fetch user.',
+      ErrorCodes.USER_NOT_FOUND,
+    );
+  }
+  if (resp.data.errors[0].message) {
+    throw new CustomError(
+      wrapTextMultiline(resp.data.errors[0].message, 90, 1)[0],
+      resp.statusText,
+    );
+  }
+  throw new CustomError(
+    'Something went wrong while trying to retrieve the stats data using the GraphQL API.',
+    ErrorCodes.GRAPHQL_ERROR,
   );
 };

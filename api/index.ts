@@ -8,13 +8,15 @@ export const main = async (request: VercelRequest, response: VercelResponse) => 
   const { username } = request.query as RequestQuery;
   try {
     const stats = await fetchStats(username);
+    console.log(stats);
+    response.status(200);
+    response.send(stats);
   } catch (error) {
     const { message, secondaryMessage } = error as CustomError;
     return response.send(
       renderError(message, secondaryMessage)
     );
   }
-  response.status(200).send(`Hello, ${username}!`);
 };
 
 export default main;

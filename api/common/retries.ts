@@ -8,8 +8,8 @@ const PATs = Object.keys(process.env).filter((key) =>
 
 const RETRIES = process.env.NODE_ENV === 'test' ? 1 : PATs;
 
-export const retryer = async <T extends unknown[], R>(
-  fetcher: (token: string, ...variables: T) => Promise<AxiosResponse<GithubResponse<R>>>,
+export const retryer = async <T, R>(
+  fetcher: (variables: T, token: string) => Promise<AxiosResponse<GithubResponse<R>>>,
   variables: T,
   retries = 0,
 ): Promise<AxiosResponse<GithubResponse<R>>> => {
@@ -25,8 +25,8 @@ export const retryer = async <T extends unknown[], R>(
   try {
     const token = process.env[`GITHUB_PAT_${retries + 1}`] as string;
     const response = await fetcher(
+      variables,
       token,
-      ...variables,
     );
     const isRateExceeded = response.data.errors?.[0].type === GithubErrorType.RATE_LIMITED;
     if (isRateExceeded) {

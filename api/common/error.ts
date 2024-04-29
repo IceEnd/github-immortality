@@ -36,5 +36,7 @@ export class MissingParamError extends CustomError {
 export enum ErrorCodes {
   MAX_RETRY = 'You can deploy own instance or wait until public will be no longer limited',
   NO_TOKENS = 'Please add an env variable called GITHUB_PAT_1 with your GitHub API token in vercel',
+  USER_NOT_FOUND = 'Make sure the provided username is not an organization',
+  GRAPHQL_ERROR = 'Please try again later',
 }
 

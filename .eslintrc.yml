@@ -21,3 +21,5 @@ rules:
   semi:
     - error
     - always
+  no-control-regex:
+    - 0
