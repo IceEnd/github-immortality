@@ -36,6 +36,7 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
     totalIssues: 0,
     totalStars: 0,
     totalDiscussionsStarted: 0,
+    totalFollowers: 0,
     totalDiscussionsAnswered: 0,
     contributedTo: 0,
     rank: 0,
@@ -62,6 +63,7 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
       .reduce((prev, curr) => {
         return prev + curr.stargazers.totalCount;
       }, 0),
+    totalFollowers: user.followers.totalCount,
     rank: calculateRank({
       allCommits: false,
       commits: stats.totalCommits,
