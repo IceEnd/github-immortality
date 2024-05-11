@@ -18,7 +18,7 @@ export class Render {
       ${this.renderBackground()}
       ${this.renderContent()}
     </svg>`;
-    return template.replace(/\n|\r/g, '').replace(/\s+/g, ' ').trim();
+    return template.replace(/>\s+</g, '><').replace(/\n|\r/g, '').trim();
   }
 
   public renderContent(): string {

@@ -46,6 +46,16 @@ export class ImmortalityRender extends Render {
         font-size: 14px;
         fill: #fff;
       }
+      .radar-label {
+        font-size: 11px;
+        fill: #1d1d14;
+        text-anchor: middle;
+      }
+      .radar-value {
+        font-size: 11px;
+        fill: #5a8747;
+        text-anchor: middle;
+      }
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -126,7 +136,7 @@ export class ImmortalityRender extends Render {
         <stop offset="100%" style="stop-color:#e8d1cf" stop-opacity="0.3" />
       </radialGradient>
     </defs>
-    <g class="hexagon" transform="translate(60, 70)">
+    <g class="hexagon" transform="translate(60, 75)">
       <polygon
         stroke="#cebcba"
         fill="url(#hexGradient)"
@@ -150,14 +160,14 @@ export class ImmortalityRender extends Render {
         stroke-dasharray: ${total} ${total};
         stroke-dashoffset: -${total};
         fill-opacity: 0;
-        animation: radar-dash 5s ease-in-out forwards;
+        animation: radar-dash 4.5s ease-in-out forwards;
       }
       @keyframes radar-dash {
         0% {
           stroke-dashoffset: -${total};
           fill-opacity: 0;
         }
-        80% {
+        90% {
           stroke-dashoffset: 0;
           fill-opacity: 0;
         }
@@ -168,6 +178,31 @@ export class ImmortalityRender extends Render {
       }
       </style>
       <polygon class="radar" stroke="#7d6f6d" points="${radarPoints}" fill="#fff" />
+      <g transform="translate(${polygon60[1][0]}, -18)">
+        <text x="0" y="0" class="radar-label text">Star</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.totalStars}</text>
+      </g>
+      <g transform="translate(${polygon60[2][0]}, -18)">
+        <text x="0" y="0" class="radar-label text">PRs</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.totalPRs}</text>
+      </g>
+
+      <g transform="translate(${polygon60[3][0] + 20}, ${polygon60[3][1]})">
+        <text x="0" y="0" class="radar-label text">Issues</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.totalIssues}</text>
+      </g>
+      <g transform="translate(${polygon60[4][0]}, ${polygon60[4][1] + 14})">
+        <text x="0" y="0" class="radar-label text">Followers</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.totalFollowers}</text>
+      </g>
+      <g transform="translate(${polygon60[5][0]}, ${polygon60[5][1] + 14})">
+        <text x="0" y="0" class="radar-label text">Commits</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.totalCommits}</text>
+      </g>
+      <g transform="translate(${polygon60[0][0] - 14}, ${polygon60[0][1]})">
+        <text x="0" y="0" class="radar-label text">C2</text>
+        <text x="0" y="13" class="radar-value text">${this.stats.contributedTo}</text>
+      </g>
     </g>
     `;
   }
