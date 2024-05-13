@@ -1,5 +1,5 @@
 import { Render } from '../base';
-import { BRUSH } from '../../assets';
+import { BRUSH, PEOPLE, PEOPLE_TEXTURE } from '../../assets';
 import { IStats } from '../../../src/types/stats';
 
 const MAX_STARTS = 10000;
@@ -19,6 +19,19 @@ export class ImmortalityRender extends Render {
     return `
       ${this.renderTitle()}
       ${this.renderRadarChart()}
+      ${this.renderLevel()}
+    `;
+  }
+
+  private renderLevel(): string {
+    return `
+      <symbol id="peopleBorder">${PEOPLE}</symbol>
+      <g transform="translate(350, 75)">
+        <g fill="#4d4947" fill-opacity="0.9">
+          <use href="#peopleBorder" />
+        </g>
+        <g fill="#6e828d">${PEOPLE_TEXTURE}</g>
+      </g>
     `;
   }
 
@@ -68,7 +81,7 @@ export class ImmortalityRender extends Render {
     `;
   }
 
-  public renderTitle(): string {
+  private renderTitle(): string {
     return `
       <defs>
         <linearGradient id="titleGradient">
@@ -95,7 +108,7 @@ export class ImmortalityRender extends Render {
     `;
   }
 
-  public renderRadarChart(): string {
+  private renderRadarChart(): string {
     const rx = 60;
     const ry = 60 * Math.sin(Math.PI / 3);
     const polygon60 = this.renderHexagon(60);

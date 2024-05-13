@@ -64,15 +64,17 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
         return prev + curr.stargazers.totalCount;
       }, 0),
     totalFollowers: user.followers.totalCount,
-    rank: calculateRank({
-      allCommits: false,
-      commits: stats.totalCommits,
-      prs: stats.totalPRs,
-      reviews: stats.totalReviews,
-      issues: stats.totalIssues,
-      stars: stats.totalStars,
-      followers: user.followers.totalCount,
-    }),
+    totalIssues: user.openIssues.totalCount + user.closedIssues.totalCount,
+  });
+
+  stats.rank = calculateRank({
+    allCommits: false,
+    commits: stats.totalCommits,
+    prs: stats.totalPRs,
+    reviews: stats.totalReviews,
+    issues: stats.totalIssues,
+    stars: stats.totalStars,
+    followers: user.followers.totalCount,
   });
 
   return stats;

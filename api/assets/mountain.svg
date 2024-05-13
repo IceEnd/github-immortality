@@ -1,6 +1,6 @@
 <defs>
   <filter id="mountainFilter">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
   </filter>
 </defs>
 <g fill-rule="evenodd" fill="#c9ccc1" fill-opacity="0.6" stroke="none" filter="url(#mountainFilter)">
