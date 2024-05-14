@@ -10,7 +10,6 @@ export const main = async (request: VercelRequest, response: VercelResponse) => 
 
   try {
     const stats = await fetchStats(username);
-    console.log(stats);
     response.status(200);
     response.send(renderStatsCard(stats));
   } catch (error) {

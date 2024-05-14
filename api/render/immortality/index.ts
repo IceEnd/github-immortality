@@ -6,7 +6,7 @@ const MAX_STARTS = 10000;
 const MAX_FOLLOWERS = 1000;
 const MAX_PRS = 500;
 const MAX_CONTRIBUTED = 10;
-const MAX_ISSUES = 100;
+const MAX_ISSUES = 200;
 const MAX_COMMITS = 365;
 const RADIAN = Math.PI / 3;
 
@@ -25,12 +25,23 @@ export class ImmortalityRender extends Render {
 
   private renderLevel(): string {
     return `
+      <defs>
+        <linearGradient id="progressGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="${100 - this.stats.rank}%" stop-color="#fff" stop-opacity="0.3">
+            <animate attributeName="offset" values="0;${1 - (this.stats.rank / 100)};" dur="2s" repeatCount="1"/>
+          </stop>
+          <stop offset="${this.stats.rank}%" stop-color="transparent" stop-opacity="0" />
+        </linearGradient>
+      </defs>
       <symbol id="peopleBorder">${PEOPLE}</symbol>
-      <g transform="translate(350, 75)">
+      <g transform="translate(360, 65) scale(0.9)" class="hexagon" style="animation-delay: 250ms">
         <g fill="#4d4947" fill-opacity="0.9">
           <use href="#peopleBorder" />
         </g>
         <g fill="#6e828d">${PEOPLE_TEXTURE}</g>
+        <g fill="url(#progressGradient)">
+          <use href="#peopleBorder" />
+        </g>
       </g>
     `;
   }
