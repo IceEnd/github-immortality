@@ -24,6 +24,10 @@ export class ImmortalityRender extends Render {
   }
 
   private renderLevel(): string {
+    const THRESHOLDS = [1, 5, 10, 15, 20, 30,40,50,60, 70, 80, 90, 100];
+    const LEVELS = ['道祖', '大罗', '太乙', '金仙', '真仙', '大乘', '合体', '炼虚', '化神', '元婴', '金丹', '筑基', '练气'];
+    const level = LEVELS[THRESHOLDS.findIndex((t) => this.stats.rank <= t)];
+
     return `
       <defs>
         <linearGradient id="progressGradient" x1="0%" y1="100%" x2="0%" y2="0%">
@@ -34,13 +38,22 @@ export class ImmortalityRender extends Render {
         </linearGradient>
       </defs>
       <symbol id="peopleBorder">${PEOPLE}</symbol>
-      <g transform="translate(360, 65) scale(0.9)" class="hexagon" style="animation-delay: 250ms">
+      <g transform="translate(330, 65) scale(1.4)" class="hexagon" style="animation-delay: 250ms">
         <g fill="#4d4947" fill-opacity="0.9">
           <use href="#peopleBorder" />
         </g>
         <g fill="#6e828d">${PEOPLE_TEXTURE}</g>
         <g fill="url(#progressGradient)">
           <use href="#peopleBorder" />
+        </g>
+        <g class="fade-in" style="animation-delay: 2s">
+          <circle cx="35" cy="50" r="20" fill="#6baecf" fill-opacity="0.75">
+            <animate attributeName="r" values="19;20;19" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="35" cy="50" r="16" fill="none" stroke="#7d6f6d" stroke-dasharray="10 10">
+            <animate attributeName="r" values="16;17;16" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text class="level" font-weight="800" fill="#f4eca7" writing-mode="tb" letter-spacing="2" style="font-size: 12px;" y="37" x="35">${level}</text>
         </g>
       </g>
     `;
@@ -50,7 +63,7 @@ export class ImmortalityRender extends Render {
     return `${this.renderStyle()}`;
   }
 
-  public renderStyle(): string {
+  private renderStyle(): string {
     return `
       <title>${this.stats.name}的仙途</title>
       <style>
@@ -59,12 +72,15 @@ export class ImmortalityRender extends Render {
         font-weight: 800;
         animation: fadeIn .5s ease-in-out forwards;
       }
-      .hexagon {
+      .hexagon, .fade-in {
         opacity: 0;
         animation: fadeIn .5s ease-in-out forwards;
       }
       .text {
         font-family: 'Segoe UI', Ubuntu, Sans-Serif;
+      }
+      .level {
+        font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
       .title {
         font-size: 14px;
@@ -103,8 +119,8 @@ export class ImmortalityRender extends Render {
         <filter id="titleGlow">
           <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
           <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
           </feMerge>
         </filter>
       </defs>
