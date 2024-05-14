@@ -53,7 +53,7 @@ export class ImmortalityRender extends Render {
           <circle cx="35" cy="50" r="16" fill="none" stroke="#7d6f6d" stroke-dasharray="10 10">
             <animate attributeName="r" values="16;17;16" dur="2s" repeatCount="indefinite"/>
           </circle>
-          <text class="level" font-weight="800" fill="#f4eca7" writing-mode="tb" letter-spacing="2" style="font-size: 12px;" y="37" x="35">${level}</text>
+          <text class="level" font-weight="800" fill="#f4eca7" writing-mode="tb" letter-spacing="1" style="font-size: 12px;" y="50" x="35" text-anchor="middle">${level}</text>
         </g>
       </g>
     `;
