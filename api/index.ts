@@ -1,10 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { renderError, renderStatsCard } from './render';
-import { fetchStats } from './fetchers/stats';
-import { CustomError } from './common/error';
+import { renderError, renderStatsCard } from '../src/render';
+import { fetchStats } from '../src/fetchers/stats';
+import { CustomError } from '../src/common/error';
 import { RequestQuery } from '../src/types/request';
 
-export const main = async (request: VercelRequest, response: VercelResponse) => {
+const main = async (request: VercelRequest, response: VercelResponse) => {
   const { username } = request.query as RequestQuery;
   response.setHeader('Content-Type', 'image/svg+xml');
 

@@ -4,8 +4,8 @@ import {
   retryer, wrapTextMultiline, MissingParamError, CustomError, ErrorCodes, calculateRank
 } from '../common';
 import { GRAPHQL_REPOS_QUERY, GRAPHQL_STATS_QUERY } from '../graphql';
-import { StatsResponse, IGithubStats, GithubErrorType } from '../../src/types/github';
-import { IStats } from '../../src/types/stats';
+import { StatsResponse, IGithubStats, GithubErrorType } from '../types/github';
+import { IStats } from '../types/stats';
 
 type Variables = {
   login: string;

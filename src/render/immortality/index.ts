@@ -1,6 +1,6 @@
 import { Render } from '../base';
 import { BRUSH, PEOPLE, PEOPLE_TEXTURE } from '../../assets';
-import { IStats } from '../../../src/types/stats';
+import { IStats } from '../../types/stats';
 
 const MAX_STARTS = 10000;
 const MAX_FOLLOWERS = 1000;

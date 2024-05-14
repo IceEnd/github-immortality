@@ -1,6 +1,6 @@
 import { ImmortalityRender } from './immortality';
 import { Render } from './base';
-import { IStats } from '../../src/types/stats';
+import { IStats } from '../types/stats';
 
 export const renderStatsCard = (stats: IStats) => {
   const instance = getInstance(stats);

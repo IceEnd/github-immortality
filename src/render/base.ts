@@ -1,5 +1,5 @@
 import { MOUNTAIN } from '../assets';
-import { IStats } from '../../src/types/stats';
+import { IStats } from '../types/stats';
 
 export class Render {
   static WIDTH = 500;

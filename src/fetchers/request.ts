@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { GithubResponse } from '../../src/types/github';
+import { GithubResponse } from '../types/github';
 
 export const request = <T>(data: Record<string, unknown>, headers: Record<string, string>): Promise<AxiosResponse<GithubResponse<T>>> => {
   return axios({

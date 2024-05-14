@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { CustomError, ErrorCodes } from './error';
-import { GithubResponse, GithubErrorType } from '../../src/types/github';
+import { GithubResponse, GithubErrorType } from '../types/github';
 
 const PATs = Object.keys(process.env).filter((key) =>
   /GITHUB_PAT_\d*$/.exec(key),
