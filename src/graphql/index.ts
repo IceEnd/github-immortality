@@ -67,7 +67,7 @@ export const GRAPHQL_TOP_LANGUAGES = `
       repositories(ownerAffiliations: OWNER, isFork: false, first: 100) {
         nodes {
           name
-          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+          languages(first: 6, orderBy: {field: SIZE, direction: DESC}) {
             edges {
               size
               node {

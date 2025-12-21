@@ -5,6 +5,7 @@ import { renderLevel } from './level';
 import { Render } from '../base';
 import { IStats } from '../../types/stats';
 import { renderStamp } from './stamp';
+import { renderTopLanguages } from './top-languages';
 
 export class ImmortalityRender extends Render {
   constructor(stats: IStats) {
@@ -15,6 +16,7 @@ export class ImmortalityRender extends Render {
     return `
       ${this.renderTitle()}
       ${this.renderRadarChart()}
+      ${this.renderTopLanguages()}
       ${renderLevel(this.stats.rank)}
       ${this.renderStamp()}
     `;
@@ -98,5 +100,13 @@ export class ImmortalityRender extends Render {
       height: Render.HEIGHT,
       radius: Render.CARD_RADIUS,
     });
+  }
+
+  private renderTopLanguages(): string {
+    return renderTopLanguages({
+      width: Render.WIDTH,
+      height: Render.HEIGHT,
+      radius: Render.CARD_RADIUS,
+    }, this.stats.topLanguages);
   }
 }

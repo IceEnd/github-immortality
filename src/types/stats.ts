@@ -1,3 +1,9 @@
+export interface ILanguage {
+  name: string;
+  color: string;
+  size: number;
+}
+
 export interface IStats {
   name: string,
   totalPRs: number,
@@ -13,4 +19,5 @@ export interface IStats {
   totalRepositories: number,
   contributedTo: number,
   rank: number,
+  topLanguages: ILanguage[],
 }

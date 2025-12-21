@@ -3,9 +3,9 @@ import { request } from './request';
 import {
   retryer, wrapTextMultiline, MissingParamError, CustomError, ErrorCodes, calculateRank
 } from '../common';
-import { GRAPHQL_REPOS_QUERY, GRAPHQL_STATS_QUERY } from '../graphql';
-import { StatsResponse, IGithubStats, GithubErrorType } from '../types/github';
-import { IStats } from '../types/stats';
+import { GRAPHQL_REPOS_QUERY, GRAPHQL_STATS_QUERY, GRAPHQL_TOP_LANGUAGES } from '../graphql';
+import { StatsResponse, IGithubStats, GithubErrorType, TopLanguagesResponse, ITopLanguagesData, GithubResponse } from '../types/github';
+import { IStats, ILanguage } from '../types/stats';
 
 type Variables = {
   login: string;
@@ -41,16 +41,22 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
     totalRepositories: 0,
     contributedTo: 0,
     rank: 0,
+    topLanguages: [],
   };
 
-  const res = await statsFetcher({
-    username,
-    includeMergedPullRequests: true,
-    includeDiscussions: true,
-    includeDiscussionsAnswers: true,
-  });
+  // 并发请求用户统计数据和最常用语言
+  const [res, languagesRes] = await Promise.all([
+    statsFetcher({
+      username,
+      includeMergedPullRequests: true,
+      includeDiscussions: true,
+      includeDiscussionsAnswers: true,
+    }),
+    topLanguagesFetcher(username),
+  ]);
 
   catchError(res);
+  catchError(languagesRes);
 
   const { user } = res.data.data;
   stats.name = user.name || user.login;
@@ -78,6 +84,11 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
     stars: stats.totalStars,
     followers: user.followers.totalCount,
   });
+
+  // 处理最常用语言数据
+  if (languagesRes && !languagesRes.data.errors) {
+    stats.topLanguages = calculateTopLanguages(languagesRes.data.data);
+  }
 
   return stats;
 };
@@ -150,8 +161,66 @@ const fetcher = (variables: Variables, token: string): Promise<AxiosResponse<Sta
   );
 };
 
-const catchError = (resp?: AxiosResponse<StatsResponse>): void => {
-  if (!resp?.data.errors) {
+/**
+ * Fetch top languages for a given username.
+ */
+const topLanguagesFetcher = async (username: string): Promise<AxiosResponse<TopLanguagesResponse> | null> => {
+  try {
+    const res = await retryer<{ login: string }, ITopLanguagesData>(
+      (variables, token) => {
+        return request(
+          {
+            query: GRAPHQL_TOP_LANGUAGES,
+            variables,
+          },
+          {
+            Authorization: `bearer ${token}`,
+          },
+        );
+      },
+      { login: username },
+    );
+    return res;
+  } catch (error) {
+    console.error('Error fetching top languages:', error);
+    return null;
+  }
+};
+
+/**
+ * Calculate top languages from repositories data.
+ */
+const calculateTopLanguages = (data: ITopLanguagesData): ILanguage[] => {
+  const languageMap = new Map<string, { color: string; size: number }>();
+  
+  // 遍历所有仓库，聚合语言使用情况
+  data.user.repositories.nodes.forEach((repo) => {
+    repo.languages.edges.forEach((edge) => {
+      const { name, color } = edge.node;
+      const { size } = edge;
+      
+      if (languageMap.has(name)) {
+        const existing = languageMap.get(name)!;
+        existing.size += size;
+      } else {
+        languageMap.set(name, { color, size });
+      }
+    });
+  });
+  
+  // 转换为数组并按使用量排序
+  const languages: ILanguage[] = Array.from(languageMap.entries())
+    .map(([name, { color, size }]) => ({ name, color, size }))
+    .sort((a, b) => b.size - a.size);
+  
+  return languages;
+};
+
+const catchError = <T>(resp?: AxiosResponse<GithubResponse<T>> | null): void => {
+  if (!resp?.data) {
+    return;
+  }
+  if (!resp.data.errors) {
     return;
   }
   console.error(resp.data.errors);

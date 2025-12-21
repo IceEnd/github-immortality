@@ -60,3 +60,24 @@ export interface IGithubStats {
 }
 
 export type StatsResponse = GithubResponse<IGithubStats>;
+
+export interface ITopLanguagesData {
+  user: {
+    repositories: {
+      nodes: {
+        name: string;
+        languages: {
+          edges: {
+            size: number;
+            node: {
+              color: string;
+              name: string;
+            };
+          }[];
+        };
+      }[];
+    };
+  };
+}
+
+export type TopLanguagesResponse = GithubResponse<ITopLanguagesData>;
