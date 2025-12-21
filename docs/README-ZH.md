@@ -1,17 +1,72 @@
-# github-immortality
+# GitHub 修仙传 ⚔️
 
-参考了[github-readme-stats](https://github.dev/anuraghazra/github-readme-stats), 制作成的基于《凡人修仙传》体系的统计卡片。
+简体中文 | [English](../README.md)
 
-## 使用方法
+> 你的 GitHub 之旅，可视化为修仙之路
 
-通过在链接上加上 Github 用户名，就可以得到一张修仙履历卡片了。
+一个基于《凡人修仙传》修炼体系的精美 GitHub 统计卡片。将你的 GitHub 贡献转化为一场充满中国传统美学的修仙之旅。
+
+## ✨ 特性
+
+- 🎨 **精美设计**：纯手工打造的 SVG，融合中国传统水墨画美学
+- 🌊 **动态特效**：流畅的水波荡漾动画和渐变过渡效果
+- 📊 **全面统计**：追踪 commits、PRs、issues、reviews、stars 和 followers
+- 🏆 **13 个修仙境界**：从练气期到道祖，完整的修真等级体系
+- 🎭 **智能配色**：每个境界都有独特的配色方案，与背景和谐统一
+- ⚡ **高性能**：基于 Vercel Edge Functions，配备智能缓存
+- 🔧 **可定制**：支持多种参数和主题（即将推出）
+
+## 📖 Demo
+
+[![IceEnd's GitHub stats](https://github-immortality.vercel.app/api?username=iceend)](https://github.com/IceEnd)
+
+## 🚀 快速开始
+
+只需在 URL 中添加你的 GitHub 用户名，即可获得你的修仙统计卡片：
 
 ```markdown
-[![IceEnd's GitHub stats](https://github-immortality.vercel.app/api?username=iceend)](https://github.com/IceEnd)
+![GitHub 统计](https://github-immortality.vercel.app/api?username=你的用户名)
 ```
 
-更改 ?username= 的值为你的 GitHub 用户名。
+将 `你的用户名` 替换为你实际的 GitHub 用户名。
 
-## Demo
+## 🎯 修仙境界
 
-[![IceEnd's GitHub stats](https://github-immortality.vercel.app/api?username=iceend)](https://github.com/IceEnd)
+卡片会根据你的 GitHub 活动计算修仙境界：
+
+| 境界 | 名称 | 要求 |
+|------|------|------|
+| 13 | 道祖 | 前 1% - 传奇级贡献者 |
+| 12 | 大罗金仙 | 前 5% - 代码宗师 |
+| 11 | 太乙真仙 | 前 10% - 杰出开发者 |
+| 10 | 金仙 | 前 15% - 专家级贡献者 |
+| 9 | 真仙 | 前 20% - 高级开发者 |
+| 8 | 大乘期 | 前 30% - 熟练的修炼者 |
+| 7 | 合体期 | 前 40% - 经验丰富的程序员 |
+| 6 | 炼虚期 | 前 50% - 精通开发者 |
+| 5 | 化神期 | 前 60% - 称职的贡献者 |
+| 4 | 元婴期 | 前 70% - 成长中的开发者 |
+| 3 | 金丹期 | 前 80% - 活跃贡献者 |
+| 2 | 筑基期 | 前 90% - 常规贡献者 |
+| 1 | 练气期 | 开始你的修仙之旅 |
+
+### 排名算法
+
+修仙境界通过加权公式计算：
+
+- ⭐ **Stars（声望）**：6倍权重 - 代表项目影响力和认可度
+- 👥 **Followers（信众）**：4倍权重 - 个人影响力和社区存在感
+- 🔀 **Pull Requests（助力）**：3倍权重 - 对开源社区的实质贡献
+- 👁️ **Code Reviews（论道）**：2倍权重 - 代码质量把控和指导能力
+- 🐛 **Issues（心魔）**：2倍权重 - 发现和解决问题的能力
+- 💻 **Commits（修为）**：1倍权重 - 日常修炼（防刷权重较低）
+
+## 📜 许可证
+
+[MIT License](../LICENSE) © Alchemy
+
+---
+
+<div align="center">
+  <sub>愿你的修仙之路一帆风顺！🌟</sub>
+</div>

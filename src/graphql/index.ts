@@ -59,3 +59,25 @@ export const GRAPHQL_STATS_QUERY = `
     }
   }
 `;
+
+export const GRAPHQL_TOP_LANGUAGES = `
+  query userInfo($login: String!) {
+    user(login: $login) {
+      # fetch only owner repos & not forks
+      repositories(ownerAffiliations: OWNER, isFork: false, first: 100) {
+        nodes {
+          name
+          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+            edges {
+              size
+              node {
+                color
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

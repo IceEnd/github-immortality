@@ -38,6 +38,7 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
     totalDiscussionsStarted: 0,
     totalFollowers: 0,
     totalDiscussionsAnswered: 0,
+    totalRepositories: 0,
     contributedTo: 0,
     rank: 0,
   };
@@ -64,6 +65,7 @@ export const fetchStats = async (username?: string): Promise<IStats> => {
         return prev + curr.stargazers.totalCount;
       }, 0),
     totalFollowers: user.followers.totalCount,
+    totalRepositories: user.repositories.totalCount,
     totalIssues: user.openIssues.totalCount + user.closedIssues.totalCount,
   });
 

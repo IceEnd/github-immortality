@@ -10,6 +10,7 @@ export interface IStats {
   totalDiscussionsStarted: number,
   totalDiscussionsAnswered: number,
   totalFollowers: number,
+  totalRepositories: number,
   contributedTo: number,
   rank: number,
 }
