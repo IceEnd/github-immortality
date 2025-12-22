@@ -1,0 +1,283 @@
+:root {
+    --bg-color: #f4f1ea;
+    --text-color: #2c2c2c;
+    --accent-color: #8b4513;
+    --border-color: #d3cdbc;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><path d="M0 0h100v100H0z" fill="none"/><path d="M10 10l80 80M90 10L10 90" stroke="%23000" stroke-width="0.5"/></svg>');
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    padding: 60px 0 40px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* GitHub Corner */
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+    0%, 100% { transform: rotate(0); }
+    20%, 60% { transform: rotate(-25deg); }
+    40%, 80% { transform: rotate(10deg); }
+}
+
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none;
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
+    .github-corner svg {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.language-switch {
+    position: absolute;
+    top: 20px;
+    right: 90px;
+    display: flex;
+    gap: 10px;
+}
+
+.language-switch button {
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    color: #666;
+    transition: var(--transition);
+    min-width: 80px; /* 保持宽度稳定 */
+}
+
+/* Input Section */
+.preview-section {
+    margin-bottom: 50px;
+}
+
+.input-group {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    box-shadow: var(--card-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    font-size: 1.1rem;
+    background: white;
+    outline: none;
+}
+
+#generate-btn {
+    padding: 0 30px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+#generate-btn:hover {
+    background-color: #5d2e0d;
+}
+
+/* Card Preview */
+.preview-card {
+    background: white;
+    min-height: 220px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+#card-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+#card-wrapper img.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Copy Section */
+.copy-section {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #888;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.tab-btn.active {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+    font-weight: bold;
+}
+
+.code-container {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9rem;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+#copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+#copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.feedback {
+    text-align: center;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: #888;
+}
+
+.github-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.github-link:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(139, 69, 19, 0.2);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    .input-group { flex-direction: column; box-shadow: none; gap: 10px; }
+    input[type="text"] { border-radius: 8px; border: 1px solid var(--border-color); }
+    #generate-btn { border-radius: 8px; padding: 12px; }
+}
+
