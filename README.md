@@ -18,7 +18,7 @@ A beautiful GitHub stats card inspired by the cultivation system from "A Record 
 
 ## 📖 Demo
 
-[![iceend's GitHub stats](http://localhost:3000/api?username=iceend&theme=dark)](https://github.com/iceend)
+[![IceEnd's GitHub stats](http://github-immortality.vercel.app/api?username=iceend&theme=dark)](https://github.com/IceEnd)
 
 ## 🚀 Quick Start
 
