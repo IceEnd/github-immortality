@@ -14,11 +14,11 @@ A beautiful GitHub stats card inspired by the cultivation system from "A Record 
 - 🏆 **13 Cultivation Realms**: From Qi Refinement (练气) to Dao Ancestor (道祖)
 - 🎭 **Intelligent Coloring**: Each realm has its unique color scheme harmonized with the background
 - ⚡ **High Performance**: Powered by Vercel Edge Functions with smart caching
-- 🔧 **Customizable**: Support for various parameters and themes (coming soon)
+- 🔧 **Customizable**: Support for themes (`light` / `dark`) and various parameters
 
 ## 📖 Demo
 
-[![IceEnd's GitHub stats](https://github-immortality.vercel.app/api?username=iceend)](https://github.com/IceEnd)
+[![iceend's GitHub stats](http://localhost:3000/api?username=iceend&theme=dark)](https://github.com/iceend)
 
 ## 🚀 Quick Start
 
@@ -29,6 +29,16 @@ Simply add your GitHub username to the URL to get your cultivation stats card:
 ```
 
 Replace `YOUR_USERNAME` with your actual GitHub username.
+
+## ⚙️ Options
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `username` | `string` | — | **Required.** Your GitHub username |
+| `theme` | `string` | `light` | Card theme. Available: `light`, `dark` |
+
 
 ## 🎯 Cultivation Realms
 

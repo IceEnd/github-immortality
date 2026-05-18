@@ -8,8 +8,8 @@ import { renderStamp } from './stamp';
 import { renderTopLanguages } from './top-languages';
 
 export class ImmortalityRender extends Render {
-  constructor(stats: IStats) {
-    super(stats);
+  constructor(stats: IStats, theme: 'light' | 'dark' = 'light') {
+    super(stats, theme);
   }
 
   public renderContent(): string {
